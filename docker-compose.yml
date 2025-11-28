@@ -7,6 +7,7 @@ services:
     environment:
       - DATABASE_URL=${DB_DATABASE_URL}
       - SECRET_KEY=${SECRET_KEY}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
     ports:
       - "${API_PORT}:8080"
     depends_on:
