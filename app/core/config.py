@@ -1,9 +1,6 @@
-import os
-
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", "postgresql://admin:admin123@admin-database:5432/adminapidb"
-)
-SECRET_KEY = os.getenv("SECRET_KEY", "admin123")
+import env 
+DATABASE_URL = env.getenv("DB_DATABASE_URL")
+SECRET_KEY = env.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
+ACCESS_TOKEN_EXPIRE_MINUTES = int(env.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 

@@ -5,13 +5,13 @@ services:
       dockerfile: Dockerfile
     container_name: adminapi
     environment:
-      - DATABASE_URL=postgresql://admin:admin123@admin-database:5432/adminapidb
-      - SECRET_KEY=admin123
+      - DATABASE_URL=${DB_DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
     ports:
-      - "8000:8000"
+      - "${API_PORT}:8080"
     depends_on:
       admin-database:
-        condition: service_healthy  
+        condition: service_healthy
     restart: always
     volumes:
       - ./:/app
@@ -20,16 +20,16 @@ services:
     image: postgres:15
     container_name: admin-database
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d adminapidb"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin123
-      - POSTGRES_DB=adminapidb
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
