@@ -21,9 +21,8 @@ class UserCreate(BaseModel):
 
 
 class UserLogin(BaseModel):
-    
-    email: EmailStr = Field(..., examples=["juan@ejemplo.com"])
-    password: str = Field(..., examples=["password123"])
+    email: EmailStr
+    password: str
 
     class Config:
         schema_extra = {
