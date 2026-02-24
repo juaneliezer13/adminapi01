@@ -42,3 +42,29 @@ Buenas prácticas
 - Los cambios en `infrastructure` no deberían afectar la API ni los casos de uso si las interfaces se mantienen.
 
 Si quieres, puedo añadir un diagrama simple o un archivo `CONTRIBUTING.md` con convenciones para seguir la arquitectura.
+
+---
+
+## Propuesta: migración a Arquitectura Hexagonal ✅
+
+He añadido un scaffold inicial bajo `src/` con los siguientes conceptos implementados como ejemplo:
+
+- DTOs y `pydantic` schemas en `src/shared/dto/` y `src/presentation/schemas/`. 💡
+- Mappers (conversión entre modelos SQLAlchemy y entidades de dominio) en `src/shared/mappers/`. 🔧
+- Puertos (interfaces) en `src/ports/` (por ejemplo `UserRepositoryPort`, `AuthServicePort`).
+- Adaptadores (implementaciones concretas) en `src/adapters/` (ej. `SQLAlchemyUserRepository`, `JWTAuthAdapter`).
+- Carpetas para servicios externos en `src/infrastructure/external_services/` (cliente HTTP como ejemplo).
+- Export funcional: servicio y adaptador CSV en `src/application/export/` y `src/adapters/export/`, y endpoint `GET /export/users` como ejemplo.
+
+Cómo está pensado usarlo (rápido):
+1. Los endpoints usan los Use Cases en `src/application/use_cases/`.
+2. Los Use Cases dependen exclusivamente de puertos (interfaces).
+3. Los adaptadores implementan esos puertos y se inyectan desde los endpoints (o desde un contenedor DI en el futuro).
+
+Siguientes pasos que puedo hacer según prefieras:
+- Completar tests y ejemplos de integración. ✅
+- Implementar todas las operaciones existentes (migrar `/auth/register` y `/auth/login` con tests). ✅
+- Agregar un cliente HTTP real en `infrastructure/external_services` y ejemplos de uso.
+- Crear `CONTRIBUTING.md` con convenciones y diagrama de carpetas.
+
+Dime qué quieres que haga a continuación y lo implemento. ✨
